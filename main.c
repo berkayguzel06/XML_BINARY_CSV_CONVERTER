@@ -105,6 +105,7 @@ void binXML(char *inputFile, char *outputFile){
         xmlNewTextChild(childs,NULL,"IBAN",customer.IBAN);
         xmlNewTextChild(childs,NULL,"account_type",customer.account_type);
         total = xmlNewTextChild(childs,NULL,"total_balance_available",customer.total_balance_available);
+        xmlNewProp(total, "currency_unit", customer.currency_unit);
         xmlNewProp(total, "bigEndVersion", enidanConvert(0,customer.total_balance_available));
         xmlNewTextChild(childs,NULL,"available_for_loan",customer.available_for_loan);
     }  
@@ -232,6 +233,10 @@ char **split(char *string, char *split_char){
     array[index] = NULL;
     return array; 
 }
+
+
+
+
 
 
 
