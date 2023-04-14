@@ -225,10 +225,6 @@ char **split(char *string, char *split_char){
     int index = 0;
     while (substring!=NULL)
     {
-        if(strchr(substring,'@')==NULL && index==5){
-            array[index] = "aaa";
-            index++;
-        }
         array[index] = substring;
         index++;
         substring = strtok(NULL,split_char);
