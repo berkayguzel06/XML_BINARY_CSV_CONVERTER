@@ -5,7 +5,7 @@
 #include <libxml2/libxml/xmlmemory.h>
 #include <libxml2/libxml/xmlschemastypes.h>
 #include <libxml2/libxml/tree.h>
-typedef struct
+typedef struct  // structure that contain the customer datas
 {
     char name[30];
     char surname[30];
@@ -21,12 +21,12 @@ typedef struct
     char available_for_loan[8];
 } Customer;
 
-void validation(char *xmlFile, char *xsdFile);
-void csvBIN(char *fileName, char *outFile);
-void binXML(char *inputFile, char *outputFile);
-char *enidanConvert(int endianType, char* element);
-char **split(char *string, char *split_char);
-char *copyString(char *s);
+void validation(char *xmlFile, char *xsdFile);//validates the xml files while using xsd file
+void csvBIN(char *fileName, char *outFile);//converts the csv file to binary file
+void binXML(char *inputFile, char *outputFile);//converts the binary file to xml file
+char *enidanConvert(int endianType, char* element);//converts the little endian to big endian
+char **split(char *string, char *split_char);//splits the chars and crates an char array
+char *copyString(char *s);//copies chars to another memory location fot prevent the corruption
 
 int main(int argc,char *argv[]){
     if(argc<=2&&argc>=4){
@@ -109,7 +109,7 @@ void binXML(char *inputFile, char *outputFile){
         xmlNewProp(total, "bigEndVersion", enidanConvert(0,customer.total_balance_available));
         xmlNewTextChild(childs,NULL,"available_for_loan",customer.available_for_loan);
     }  
-    xmlSaveFormatFile(outputFile,doc,1);
+    xmlSaveFormatFileEnc(outputFile,doc,"utf-8",1);
     xmlFreeDoc(doc);
     printf("XML Parsed\n");
 }
@@ -233,10 +233,4 @@ char **split(char *string, char *split_char){
     array[index] = NULL;
     return array; 
 }
-
-
-
-
-
-
 
